@@ -1,0 +1,60 @@
+*** Settings ***
+Documentation     This is a sample test suite using Robot Framework
+Library           SeleniumLibrary
+Suite Setup       Open Browser    http://automationexercise.com    chrome    options=add_argument("--no-sandbox")
+Suite Teardown   Close Browser
+
+
+
+*** Variables ***
+${Product_Name}     shirt
+${LOGIN_USERNAME}   ning
+${LOGIN_PASSWORD}   Ning1603
+
+
+
+*** Keywords ***
+Click product button
+    Click Button    xpath=//button[contains(text(),'Products')]
+    
+
+Search Product
+    Input Text     //*[@id='search']    ${PRODUCT_NAME}
+    Click Button   //*[@type='submit']
+
+Add Product to Cart
+    Click Button    //*[@class='cart-icon']
+
+Login
+    Click Button    //*[contains(text(),'Sign Up / Log In')]
+    Input Text    //*[@id='username']    ${LOGIN_USERNAME}
+    Input Text   //*[@id='password']    ${LOGIN_PASSWORD}
+    Click Button    //*[@type='submit']
+
+Check Cart After Login
+    Click Button   //*[@class='cart-icon']
+    Page Should Contain    Product in Cart after Login
+
+Checked Checkbox
+    Click Button    //*[@id="__next"]/div[2]/div/div[2]/div/form/div/div[6]/label/input
+
+Click Register Button
+    Click Button   //*[@id="__next"]/div[2]/div/div[2]/div/form/div/div[7]/button
+
+
+
+*** Test Cases ***
+Search Products and Verify Cart After Login
+    [Documentation]  Search and Add Product to Cart
+    Click Button    //*[contains(text(),'Products')]
+    Input Text      //*[@id='search']    shirt
+    Click Button    //*[@type='submit']
+    Click Button    //*[@class='cart-icon']
+    Click Button    //*[contains(text(),'Sign Up / Log In')]
+    Input Text      //*[@id='username']    ning
+    Input Text      //*[@id='password']    Ning1603
+    Click Button    //*[@type='submit']
+    
+
+    
+
